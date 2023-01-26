@@ -1,3 +1,7 @@
+# Django Rest
+
+Example project for the usage of django rest framework within django web framework. Also relies on django-environ.
+
 # Setup
 
 pip install djangorestframework
@@ -31,3 +35,15 @@ The following packages are optional:
 - python3 -m venv venv
 - source venv/bin/activate
 - (deactivate)
+
+# Django Environ
+- https://django-environ.readthedocs.io/en/latest/quickstart.html
+
+# External Script
+- To use django models in an external script (instead of python manage.py shell), you need the following at the beginning of your script
+`
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+import django
+django.setup()
+`
