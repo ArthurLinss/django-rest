@@ -43,7 +43,10 @@ The following packages are optional:
 - To use django models in an external script (instead of python manage.py shell), you need the following at the beginning of your script
 `
 import os
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+
 import django
+
 django.setup()
 `
