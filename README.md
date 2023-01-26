@@ -40,13 +40,13 @@ The following packages are optional:
 - https://django-environ.readthedocs.io/en/latest/quickstart.html
 
 # External Script
-- To use django models in an external script (instead of python manage.py shell), you need the following at the beginning of your script
+To use django models in an external script (instead of python manage.py shell), you need the following at the beginning of your script
 
-import os
+- import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+- os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 
-import django
+- import django
 
-django.setup()
+- django.setup()
 
