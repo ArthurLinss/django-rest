@@ -5,9 +5,10 @@ Example project for the usage of django rest framework within django web framewo
 # Setup
 
 pip install djangorestframework
-pip install markdown       # Markdown support for the browsable API.
-pip install django-filter  # Filtering support
+pip install markdown # Markdown support for the browsable API.
+pip install django-filter # Filtering support
 pip install django-environ
+pip install httpie
 
 # Information
 
@@ -32,14 +33,17 @@ The following packages are optional:
 - check in browser: http://127.0.0.1:8000/
 
 # Virtual Environment
+
 - python3 -m venv venv
 - source venv/bin/activate
 - (deactivate)
 
 # Django Environ
+
 - https://django-environ.readthedocs.io/en/latest/quickstart.html
 
 # External Script
+
 To use django models in an external script (instead of python manage.py shell), you need the following at the beginning of your script
 
 - import os
@@ -50,3 +54,7 @@ To use django models in an external script (instead of python manage.py shell), 
 
 - django.setup()
 
+# Test
+
+Test your api with the httpie (pip install httpie):
+In bash, type: `http http://127.0.0.1:8000/snippets`
