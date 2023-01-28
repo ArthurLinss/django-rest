@@ -8,7 +8,8 @@ from rest_framework import permissions
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'is_staff']
+        #fields = ['url', 'username', 'email', 'is_staff']
+        fields = ["id", "username", "snippets"]
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,4 +44,6 @@ class SnippetSerializer(serializers.Serializer):
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snippet
-        fields = ['id', 'title', 'code', 'linenos', 'language', 'style']
+        fields = ['id', 'title', 'code', 'linenos',
+                  'language', 'style', 'owner']
+        owner = serializers.ReadOnlyField(source="owner.username")
