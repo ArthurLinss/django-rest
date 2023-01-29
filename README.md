@@ -75,9 +75,26 @@ python manage.py migrate
 # ToDo
 
 - adding tests
-- adding dockerfile/docker-compose
+- adding docker support via dockerfile/docker-compose
+- update play.py script
 
 # Further Reading
 
 - https://github.com/Mohammed-abdelawal/django-api-advanced
 - https://github.com/encode/rest-framework-tutorial
+
+# Docker
+
+Build Image + run container
+
+```
+$ docker build -t restapi .
+$ docker run restapi
+```
+
+Stop running container
+
+```
+$ docker ps # get the id of the running container
+$ docker stop <container> # kill it (gracefully)
+```
