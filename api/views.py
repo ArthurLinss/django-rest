@@ -17,20 +17,19 @@ from api.models import Snippet
 from api.serializers import SnippetSerializer
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from rest_framework import mixins, generics
+from rest_framework import mixins, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import permissions
 # ViewSets define the view behavior.
 
 """
-    class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-
-"""
+class UserViewSet(viewsets.ModelViewSet):
+queryset = User.objects.all()
+serializer_class = UserSerializer
 
 
 class UserList(generics.ListAPIView):
@@ -39,6 +38,12 @@ class UserList(generics.ListAPIView):
 
 
 class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+"""
+
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -117,7 +122,7 @@ class SnippetList(mixins.ListModelMixin,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
-"""
+
 
 
 class SnippetList(generics.ListCreateAPIView):
@@ -127,7 +132,7 @@ class SnippetList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
+"""
 
 """
 @csrf_exempt
@@ -225,7 +230,7 @@ class SnippetDetail(mixins.RetrieveModelMixin,
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
-"""
+
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -250,3 +255,25 @@ class SnippetHighlight(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         snippet = self.get_object()
         return Response(snippet.highlighted)
+"""
+
+
+class SnippetViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
