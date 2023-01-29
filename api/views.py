@@ -1,10 +1,11 @@
+from rest_framework import renderers
 from django.shortcuts import render
 from api.permissions import IsOwnerOrReadOnly
 
 # Create your views here.
 from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import permission_classes
 from django.contrib.auth.models import User, Group
 from rest_framework import permissions
 from django.http import HttpResponse, JsonResponse
@@ -17,6 +18,9 @@ from api.serializers import SnippetSerializer
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import mixins, generics
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
 # ViewSets define the view behavior.
 
 """
@@ -229,3 +233,20 @@ class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SnippetSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+
+@api_view(["GET"])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'snippets': reverse('snippet-list', request=request, format=format),
+    })
+
+
+class SnippetHighlight(generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    renderer_class = [renderers.StaticHTMLRenderer]
+
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)

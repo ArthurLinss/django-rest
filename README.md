@@ -58,9 +58,9 @@ To use django models in an external script (instead of python manage.py shell), 
 
 Test your api with the httpie (pip install httpie):
 
-In bash, type: `http http://127.0.0.1:8000/snippets`
+In bash, type: `http http://127.0.0.1:8000/snippets` (note: no slash at the end of link)
 
-Including permission constraints: `http -a admin:password123 POST http://127.0.0.1:8000/snippets/ code="print(789)"`
+Including permission constraints: `http -a admin:password123 POST http://127.0.0.1:8000/snippets code="print(789)"`
 
 # Delete DB
 
@@ -71,3 +71,13 @@ python manage.py createsuperuser
 python manage.py makemigrations api
 python manage.py migrate
 ```
+
+# ToDo
+
+- adding tests
+- adding dockerfile/docker-compose
+
+# Further Reading
+
+- https://github.com/Mohammed-abdelawal/django-api-advanced
+- https://github.com/encode/rest-framework-tutorial
