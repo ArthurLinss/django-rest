@@ -98,3 +98,9 @@ Stop running container
 $ docker ps # get the id of the running container
 $ docker stop <container> # kill it (gracefully)
 ```
+
+
+# Tests
+
+Running tests `python manage.py test` on a on-the-fly DB (deleted afterwards).
+Includes every file with naming convention `test*.py `.
